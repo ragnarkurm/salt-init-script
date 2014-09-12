@@ -3,6 +3,8 @@
 domain='215.vkhk.ee'
 master='salt-linux.vkhk.ee'
 
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
 apt-get -y install python-software-properties && \
 add-apt-repository -y ppa:saltstack/salt && \
 apt-get update && \
@@ -12,7 +14,7 @@ true
 echo "master: $master" >> /etc/salt/minion
 
 host=`hostname`
-mac=`ip link show eth0 | awk '/ether/ {print $2}'`
+mac=`ip link show eth0 | awk '/ether/ {print $2}' | tr -d ':'`
 id="$host.$domain.$mac"
 echo "$id" > /etc/salt/minion_id
 
